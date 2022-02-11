@@ -1,5 +1,7 @@
 import React from "react";
-import WinnerMessage from './winner_message'
+import WinnerMessage from './winner_message';
+import Instructions from './instructions';
+
 
 class Modal extends React.Component {
     constructor(props) {
@@ -17,6 +19,9 @@ class Modal extends React.Component {
             case 'winner':
               component = <WinnerMessage winner={this.props.winner}/>;
               break;
+            case 'instructions':
+                component = <Instructions/>;
+                break;
             default:
               return null;
           }

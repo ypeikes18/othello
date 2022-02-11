@@ -41,11 +41,15 @@ export default class Board {
             row = coordinates[0] + direction[0]; 
             column = coordinates[1] + direction[1]; 
             newEdge = `${row}${column}`;
+
             if(this.onBoard([row, column]) && 
-               this.grid[row][column] === 'none') {
+            this.grid[row][column] === 'none'){
+
                 this.edges.add(newEdge)
+                
             } else if(this.onBoard([row, column]) && 
               this.grid[row][column] !== 'none'){
+                
                 this.edges.delete(newEdge);
             }
         })

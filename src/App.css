@@ -174,3 +174,18 @@ ul {
   color: white;
 }
 
+.instructions {
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  list-style-type: decimal;
+
+}
+
+.instructions > li {
+  margin: 0 0 1vh 0;
+  text-align: left;
+}
+

@@ -36,6 +36,7 @@ export default class GameComponent extends React.Component {
         return (
             <div id='game' onChange={this.handleChange}>
                 {winnerMessage}
+                { <Modal type={'instructions'}/>}
                 <h1 id='header'>Othello</h1>
                 <div id='game-div'>
                     <div id='dashboard'>
