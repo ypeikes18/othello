@@ -3,7 +3,7 @@
 An implemantation of the classic board game Othello
 
 ![image](https://user-images.githubusercontent.com/63963324/152225503-d916dfd5-5b9d-4eef-ade1-2525d4c35c22.png)
-[live link](http://landmarked.herokuapp.com/#/)
+[live link](https://ypeikes18.github.io/othello/)
 
 ## Technologies
 - Javascript
