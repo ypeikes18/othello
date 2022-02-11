@@ -7,7 +7,7 @@ An implemantation of the classic board game Othello
 
 # Game Play
 
-1. Black always moves first.
+1. Black always moves first
 
 2. If on their turn a player can't outflank and flip at least one opposing disk, their turn is skipped. However, if a move is available to them, they may not choose to forfeit their turn
 
@@ -19,7 +19,7 @@ An implemantation of the classic board game Othello
 
 6. Once a disk is placed, it can never be moved to another square later in the game
 
-7. When neither player can move, the game is over. The player withn more disks flipped to their color is the winner
+7. When neither player can move, the game is over. The player with more disks flipped to their color is the winner
 
 ## Technologies
 - Javascript
