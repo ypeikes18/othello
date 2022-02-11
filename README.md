@@ -9,11 +9,8 @@ An implemantation of the classic board game Othello
 - Javascript
 - React 
 
-## Photos 
-![image](https://user-images.githubusercontent.com/63963324/150466955-c92744a9-ee2a-4f79-93ca-5066bd141ad3.png)
-![image](https://user-images.githubusercontent.com/63963324/150466452-18666943-ce4a-47b0-9ea4-ed9ca08a222b.png)
-![image](https://user-images.githubusercontent.com/63963324/150466625-1ddf116c-993e-42f2-b485-1985a81a04fc.png)
-
+## Photo
+![image](https://user-images.githubusercontent.com/59425912/153607920-62a24089-9621-4e83-9355-81e28897c9c0.png)
 
 ## Functionality 
  
