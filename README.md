@@ -2,7 +2,7 @@
 
 An implemantation of the classic board game Othello
 
-![image](https://user-images.githubusercontent.com/63963324/152225503-d916dfd5-5b9d-4eef-ade1-2525d4c35c22.png)
+![image](https://user-images.githubusercontent.com/59425912/153607497-302444e8-af8f-4d8e-8db1-a78bd98ca90d.png)
 [live link](https://ypeikes18.github.io/othello/)
 
 ## Technologies
