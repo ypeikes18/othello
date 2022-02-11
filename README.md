@@ -7,7 +7,7 @@ An implemantation of the classic board game Othello
 
 # Game Play
 
-1. Black always moves first.
+1. Black always moves first
 
 2. If on their turn a player can't outflank and flip at least one opposing disk, their turn is skipped. However, if a move is available to them, they may not choose to forfeit their turn
 
