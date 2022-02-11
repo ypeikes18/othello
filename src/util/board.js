@@ -9,7 +9,7 @@ export default class Board {
     }
 
     createBoard() {
-        const grid = new Array;
+        const grid = [];
         let arr;
         for(let i = 1; i <=8; i++) {
             arr = new Array(8);
