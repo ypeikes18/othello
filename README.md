@@ -36,6 +36,33 @@ An implemantation of the classic board game Othello
 
 ## Code Snippets 
 
+The board uses a set to track and update a list of all spaces adjacent to occupied squares. This allows for efficent implementation in a couple areas:
+- Turn logic - Instead of checking all spaces on the board to see if the current player has a valid move we only need to check the spaces in the set
+- Gameover check - We can simply check if there are no edges to determine if the board is full
+
+```
+    updateEdges(coordinates) {
+        this.edges.delete(coordinates.join(''));
+        let newEdge, row, column;
+        
+        this.directions.forEach(direction => {
+            row = coordinates[0] + direction[0]; 
+            column = coordinates[1] + direction[1]; 
+            newEdge = `${row}${column}`;
+
+            if(this.onBoard([row, column]) && 
+            this.grid[row][column] === 'none'){
+
+                this.edges.add(newEdge)
+                
+            } else if(this.onBoard([row, column]) && 
+              this.grid[row][column] !== 'none'){
+                
+                this.edges.delete(newEdge);
+            }
+        })
+    }
+```
 
 ## Features to come
 - AI - An AI that makes skilled moves by searching the game tree
