@@ -1,70 +1,66 @@
-# Getting Started with Create React App
+# Othello
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+An implemantation of the classic board game Othello
 
-## Available Scripts
+![image](https://user-images.githubusercontent.com/63963324/152225503-d916dfd5-5b9d-4eef-ade1-2525d4c35c22.png)
+[live link](http://landmarked.herokuapp.com/#/)
 
-In the project directory, you can run:
+## Technologies
+- Javascript
+- React 
 
-### `npm start`
+## Photos 
+![image](https://user-images.githubusercontent.com/63963324/150466955-c92744a9-ee2a-4f79-93ca-5066bd141ad3.png)
+![image](https://user-images.githubusercontent.com/63963324/150466452-18666943-ce4a-47b0-9ea4-ed9ca08a222b.png)
+![image](https://user-images.githubusercontent.com/63963324/150466625-1ddf116c-993e-42f2-b485-1985a81a04fc.png)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Functionality 
+ 
+- Piece flipping logic - Game logic decides whether a turn is valid and flips pieces accordingly 
+- Turns - Game switches turns correctly and skips a players turn when they have no valid move 
+- Winner - Game notifies the players of a winner once the game is over
 
-### `npm test`
+## Code Snippets 
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```
+componentDidUpdate(prevProps){
+    if (Object.values(this.props.tripEntries).length > 0){ 
+        this.MarkerManager.updateMarkers(Object.values(this.props.tripEntries), true)
+        this.changeZoom(Object.values(this.props.tripEntries))
+    } else { 
+        this.MarkerManager.updateMarkers(Object.values(this.props.entries), false)
+        this.changeZoom(Object.values(this.props.entries))
+    }
+}
+ ```
+Taking advantage of the Redux state, we were able to conditionally render map markers and alter map zoom based on the user's current selection. When a 'trip' or 'entry' is selected, the Redux state is updated and the map dynamically changes. Updating the zoom and visible markes appropriately, the map is responsive to user input. 
 
-### `npm run build`
+``` 
+getCorners (entrys) {
+    let coordinates = [];
+    let latitudes = [];
+    let longitudes = [];
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+    for (let i = 0; i < entrys.length; i++){
+        latitudes.push(parseFloat(entrys[i].location.latitude))
+        longitudes.push(parseFloat(entrys[i].location.longitude))
+    }
+    coordinates = [Math.min(...latitudes), Math.min(...longitudes), Math.max(...latitudes), Math.max(...longitudes)]        
+    return coordinates;
+}  
+```
+getCorners is a function handling the minimum and maximum latitude/longitude values of each collection of entry to allow the Google Maps API to re-zoom the map view dynamically.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `npm run eject`
+## The Team
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+Completed with a group of 4 members having just been exposed to the MERN stack, Landmarked was built in just under 5 days! 
+- Joe Manso - Backend, state setup, the *Brutal Bug Basher*
+- Yisrael (Izzy) Peikes - Backend and state setup, officially dubbed *State and Schema Sensai*
+- Josh Laikowski - Frontend and *Styling Savant*, known as the *Heroku Whisperer* and *Betty*
+- Mack Zumarraga - Frontend and Google Map API, goes by *Map Magician*
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## Features to come
+- AI - An AI tht can search the game tree in order to make skilled moves
