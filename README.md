@@ -19,7 +19,7 @@ An implemantation of the classic board game Othello
 
 6. Once a disk is placed, it can never be moved to another square later in the game
 
-7. When neither player can move, the game is over. The player withn more disks flipped to their color is the winner
+7. When neither player can move, the game is over. The player with more disks flipped to their color is the winner
 
 ## Technologies
 - Javascript
