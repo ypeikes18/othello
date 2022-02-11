@@ -4,6 +4,8 @@ import Board from './board';
 import NewGame from './new_game';
 import DisplayTurn from './display_turn.js';
 import Links from './links';
+import Modal from './modal';
+
 
 export default class GameComponent extends React.Component {
 
@@ -24,10 +26,16 @@ export default class GameComponent extends React.Component {
     }
 
     render() {
-        const currentPlayer = this.state.game.currentPlayer();
+        const { game } = this.state;
+        const currentPlayer = game.currentPlayer();
+        
+        const winnerMessage = game.winner ? (
+            <Modal type={'winner'} winner={game.winner}/>
+        ) : null;
+
         return (
             <div id='game' onChange={this.handleChange}>
-
+                {winnerMessage}
                 <h1 id='header'>Othello</h1>
                 <div id='game-div'>
                     <div id='dashboard'>

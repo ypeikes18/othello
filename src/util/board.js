@@ -163,7 +163,7 @@ export default class Board {
     }
 
     boardFull() {
-        return !this.grid.edges.size
+        return !this.edges.size
     }
 
     winner() {

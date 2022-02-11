@@ -4,8 +4,8 @@ export default class Game {
 
     constructor() {
         this.board = new Board();
-        this.players = ['white', 'black'];
-        this.winner = undefined;
+        this.players = ['black', 'white'];
+        this.winner = null;
     }
 
     nextTurn() {
@@ -19,11 +19,12 @@ export default class Game {
     turn(coordinates) {
        if(this.board.move(this.currentPlayer(), coordinates)) {
            this.nextTurn();
-       } 
-    //    if(this.gameOver) {
-    //        this.winner = this.board.winner();
-    //        break;
-    //    }
+       }
+       debugger 
+       if(this.gameOver()) {
+           this.winner = this.board.winner();
+           debugger
+       }
 
        if(!this.board.canMove(this.currentPlayer())) {
          this.nextTurn();
