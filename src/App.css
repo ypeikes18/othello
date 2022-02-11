@@ -106,7 +106,7 @@ body {
 }
 
 
-.new-game-button {
+.new-game-button, .instructions-button {
   border: 5px solid black;
   background-color: black;
   border-radius: 100px;

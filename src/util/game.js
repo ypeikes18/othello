@@ -20,10 +20,8 @@ export default class Game {
        if(this.board.move(this.currentPlayer(), coordinates)) {
            this.nextTurn();
        }
-       debugger 
        if(this.gameOver()) {
            this.winner = this.board.winner();
-           debugger
        }
 
        if(!this.board.canMove(this.currentPlayer())) {

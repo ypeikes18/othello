@@ -11,9 +11,11 @@ export default class GameComponent extends React.Component {
 
     constructor(props) {
         super(props)
-        this.state = {game: new Game()};
+        this.state = {game: new Game(), instructions: this.showRules() };
         this.newGame = this.newGame.bind(this);
         this.turn = this.turn.bind(this);
+        this.showRules = this.showRules.bind(this);
+
     }
 
     newGame() {
@@ -25,8 +27,12 @@ export default class GameComponent extends React.Component {
        this.setState({game: this.state.game});
     }
 
+    showRules() {
+        return(<Modal type={'instructions'} key={Math.random()}/>)
+    }
+
     render() {
-        const { game } = this.state;
+        const { game, instructions } = this.state;
         const currentPlayer = game.currentPlayer();
         
         const winnerMessage = game.winner ? (
@@ -36,12 +42,18 @@ export default class GameComponent extends React.Component {
         return (
             <div id='game' onChange={this.handleChange}>
                 {winnerMessage}
-                { <Modal type={'instructions'}/>}
+                {instructions}
+
                 <h1 id='header'>Othello</h1>
                 <div id='game-div'>
                     <div id='dashboard'>
                         <DisplayTurn currentPlayer={currentPlayer}/>
                         <NewGame newGame={this.newGame}/>
+                        <div 
+                        onClick={() => this.setState({ instructions: this.showRules()}) }
+                        className='instructions-button'>
+                            Instructions
+                        </div>
                     </div>
 
                     <Board 
