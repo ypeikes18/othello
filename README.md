@@ -1,70 +1,68 @@
-# Getting Started with Create React App
+# Othello
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+An implemantation of the classic board game Othello
 
-## Available Scripts
+![image](https://user-images.githubusercontent.com/59425912/153607497-302444e8-af8f-4d8e-8db1-a78bd98ca90d.png)
+[live link](https://ypeikes18.github.io/othello/)
 
-In the project directory, you can run:
+# Game Play
 
-### `npm start`
+1. Black always moves first.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+2. If on their turn a player can't outflank and flip at least one opposing disk, their turn is skipped. However, if a move is available to them, they may not choose to forfeit their turn
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+3. Players may not skip over their own color disk(s) to outflank an opposing disk
 
-### `npm test`
+4. Disk(s) may only be outflanked as a direct result of a move and must fall in the direct line of the disk placed down
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+5. All disks outflanked in any one move must be flipped 
 
-### `npm run build`
+6. Once a disk is placed, it can never be moved to another square later in the game
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+7. When neither player can move, the game is over. The player withn more disks flipped to their color is the winner
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Technologies
+- Javascript
+- React 
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Photo
+![image](https://user-images.githubusercontent.com/59425912/153607920-62a24089-9621-4e83-9355-81e28897c9c0.png)
 
-### `npm run eject`
+## Functionality 
+ 
+- Piece flipping logic - Game logic decides whether a turn is valid and flips pieces accordingly 
+- Turns - Game switches turns correctly and skips a players turn when they have no valid move 
+- Winner - Game notifies the players of a winner once the game is over
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## Code Snippets 
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+The board uses a set to track and update a list of all spaces adjacent to occupied squares. This allows for efficent implementation in a couple areas:
+- Turn logic - Instead of checking all spaces on the board to see if the current player has a valid move we only need to check the spaces in the set
+- Gameover check - We can simply check if there are no edges to determine if the board is full
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+```
+    updateEdges(coordinates) {
+        this.edges.delete(coordinates.join(''));
+        let newEdge, row, column;
+        
+        this.directions.forEach(direction => {
+            row = coordinates[0] + direction[0]; 
+            column = coordinates[1] + direction[1]; 
+            newEdge = `${row}${column}`;
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+            if(this.onBoard([row, column]) && 
+            this.grid[row][column] === 'none'){
 
-## Learn More
+                this.edges.add(newEdge)
+                
+            } else if(this.onBoard([row, column]) && 
+              this.grid[row][column] !== 'none'){
+                
+                this.edges.delete(newEdge);
+            }
+        })
+    }
+```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## Features to come
+- AI - An AI that makes skilled moves by searching the game tree
