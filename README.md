@@ -5,7 +5,7 @@ An implemantation of the classic board game Othello
 ![image](https://user-images.githubusercontent.com/59425912/153607497-302444e8-af8f-4d8e-8db1-a78bd98ca90d.png)
 [live link](https://ypeikes18.github.io/othello/)
 
-# Game Play
+## Game Play
 
 1. Black always moves first
 
