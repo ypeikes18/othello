@@ -5,6 +5,22 @@ An implemantation of the classic board game Othello
 ![image](https://user-images.githubusercontent.com/59425912/153607497-302444e8-af8f-4d8e-8db1-a78bd98ca90d.png)
 [live link](https://ypeikes18.github.io/othello/)
 
+# Game Play
+
+1. Black always moves first.
+
+2. If on their turn a player can't outflank and flip at least one opposing disk, their turn is skipped. However, if a move is available to them, they may not choose to forfeit their turn
+
+3. Players may not skip over their own color disk(s) to outflank an opposing disk
+
+4. Disk(s) may only be outflanked as a direct result of a move and must fall in the direct line of the disk placed down
+
+5. All disks outflanked in any one move must be flipped 
+
+6. Once a disk is placed, it can never be moved to another square later in the game
+
+7. When neither player can move, the game is over. The player withn more disks flipped to their color is the winner
+
 ## Technologies
 - Javascript
 - React 
@@ -20,44 +36,6 @@ An implemantation of the classic board game Othello
 
 ## Code Snippets 
 
-```
-componentDidUpdate(prevProps){
-    if (Object.values(this.props.tripEntries).length > 0){ 
-        this.MarkerManager.updateMarkers(Object.values(this.props.tripEntries), true)
-        this.changeZoom(Object.values(this.props.tripEntries))
-    } else { 
-        this.MarkerManager.updateMarkers(Object.values(this.props.entries), false)
-        this.changeZoom(Object.values(this.props.entries))
-    }
-}
- ```
-Taking advantage of the Redux state, we were able to conditionally render map markers and alter map zoom based on the user's current selection. When a 'trip' or 'entry' is selected, the Redux state is updated and the map dynamically changes. Updating the zoom and visible markes appropriately, the map is responsive to user input. 
-
-``` 
-getCorners (entrys) {
-    let coordinates = [];
-    let latitudes = [];
-    let longitudes = [];
-
-    for (let i = 0; i < entrys.length; i++){
-        latitudes.push(parseFloat(entrys[i].location.latitude))
-        longitudes.push(parseFloat(entrys[i].location.longitude))
-    }
-    coordinates = [Math.min(...latitudes), Math.min(...longitudes), Math.max(...latitudes), Math.max(...longitudes)]        
-    return coordinates;
-}  
-```
-getCorners is a function handling the minimum and maximum latitude/longitude values of each collection of entry to allow the Google Maps API to re-zoom the map view dynamically.
-
-
-
-## The Team
-
-Completed with a group of 4 members having just been exposed to the MERN stack, Landmarked was built in just under 5 days! 
-- Joe Manso - Backend, state setup, the *Brutal Bug Basher*
-- Yisrael (Izzy) Peikes - Backend and state setup, officially dubbed *State and Schema Sensai*
-- Josh Laikowski - Frontend and *Styling Savant*, known as the *Heroku Whisperer* and *Betty*
-- Mack Zumarraga - Frontend and Google Map API, goes by *Map Magician*
 
 ## Features to come
-- AI - An AI tht can search the game tree in order to make skilled moves
+- AI - An AI that makes skilled moves by searching the game tree
