@@ -63,6 +63,14 @@ export default class Board {
         return arr;
     }
 
+    getEdgeArrays() {
+        const edgeArrays = [];
+        for (let edge of this.edges) {
+            edgeArrays.push(this.edgeToArray(edge))
+        }
+        return edgeArrays;
+    }
+
     onBoard(coordinates) {
         const row = coordinates[0];
         const column = coordinates[1];

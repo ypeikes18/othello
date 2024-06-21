@@ -4,17 +4,10 @@ class AIPlayer {
     
     constructor(board, color) {
         this.board = new Board();
-        this. color = color;
-        this.gameTree = new GameTree()
+        this.color = color;
     }
 
 
 
 }
 
-const factorials = (num) => {
-    if(num === 1 || num === 0) {
-        return num;
-    }
-    return num * factorials(num - 1);
-}
