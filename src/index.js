@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
-import Board from './util/board';
+import Board from './game_logic/board';
 
 
 document.addEventListener('DOMContentLoaded', () => {

@@ -13,6 +13,7 @@ export default class Board extends React.Component {
 
     mapped() {
         const board = this.props.game.board.grid;
+        const {turn} = this.props
 
         return (<div id='board'>
             {board.map((row, rowIndex) => {
@@ -23,7 +24,7 @@ export default class Board extends React.Component {
                                                color={square}
                                                game={this.props.game}
                                                coordinates={[rowIndex, columnIndex]}
-                                               turn={this.props.turn}/>
+                                               turn={turn}/>
                 })    
                 }
                 </div>)

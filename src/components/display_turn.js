@@ -1,14 +1,14 @@
 import React from "react";
 
 const DisplayTurn = (props) => {
-    const turn = props.currentPlayer;
+    const color = props.color;
     
     return (<div id='turn'>
         <div>
             <h3>Turn:</h3>
-            <p className={`${turn}-turn turn`}>
+            <p className={`${color}-turn turn`}>
                 <strong>
-                    {turn.toUpperCase()}
+                    {color.toUpperCase()}
                 </strong>
             </p>
         </div>        

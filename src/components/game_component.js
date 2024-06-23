@@ -1,5 +1,5 @@
 import React from 'react';
-import Game from '../util/game.js';
+import Game from '../game_logic/game.js';
 import Board from './board';
 import NewGame from './new_game';
 import DisplayTurn from './display_turn.js';
@@ -15,7 +15,6 @@ export default class GameComponent extends React.Component {
         this.newGame = this.newGame.bind(this);
         this.turn = this.turn.bind(this);
         this.showRules = this.showRules.bind(this);
-
     }
 
     newGame() {
@@ -23,7 +22,7 @@ export default class GameComponent extends React.Component {
     }
 
     turn(coordinates) {
-       this.state.game.turn(coordinates);
+       this.state.game.humanTurn(coordinates);
        this.setState({game: this.state.game});
     }
 
@@ -33,7 +32,7 @@ export default class GameComponent extends React.Component {
 
     render() {
         const { game, instructions } = this.state;
-        const currentPlayer = game.currentPlayer();
+        const color = game.getCurrentPlayer().color;
         
         const winnerMessage = game.winner ? (
             <Modal type={'winner'} winner={game.winner}/>
@@ -47,7 +46,7 @@ export default class GameComponent extends React.Component {
                 <h1 id='header'>Othello</h1>
                 <div id='game-div'>
                     <div id='dashboard'>
-                        <DisplayTurn currentPlayer={currentPlayer}/>
+                        <DisplayTurn color={color}/>
                         <NewGame newGame={this.newGame}/>
                         <div 
                         onClick={() => this.setState({ instructions: this.showRules()}) }
