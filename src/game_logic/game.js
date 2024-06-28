@@ -26,7 +26,6 @@ export default class Game {
     goToNextTurn() {
         this.players.unshift(this.players.pop());
         if(this.gameOver()) {
-            debugger
             this.winner = this.board.winner();
             console.log("WINNER WINNER", this.winner)
             console.log({board: this.board.grid})

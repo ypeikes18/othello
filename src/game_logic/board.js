@@ -1,4 +1,5 @@
 import {WHITE, BLACK, TIE} from "./constants";
+import {InclusiveSet} from "./utils"
 
 export default class Board {
 
@@ -7,7 +8,7 @@ export default class Board {
         this.directions = [[-1,-1], [-1,0], [-1,1],
                            [1, -1], [1, 0], [1, 1],
                            [0,-1], [0,1]]
-        this.edges = this.createEdges();
+        this.edges = this.createEdges(); //InclusiveSet
         this.emptySpace = this.emptySpace.bind(this)
         this.corners = [[0,0],[0,7],[7,0],[7,7]]
     }
@@ -26,15 +27,15 @@ export default class Board {
     }
 
     createEdges() {
-        const initialEdges = ['[2,2]', '[2,3]', '[2,4]', '[2,5]',
-                        '[3,2]', '[3,5]', '[4,2]', '[4,5]',
-                        '[5,2]', '[5,3]', '[5,4]', '[5,5]'];
-        return new Set(initialEdges)
+        const initialEdges = [[2,2],[2,3], [2,4], [2,5],
+                        [3,2], [3,5], [4,2], [4,5],
+                        [5,2], [5,3], [5,4], [5,5]];
+        return new InclusiveSet(initialEdges)
     }
 
     isCorner(coordinates) {
         for(let corner of  this.corners) {
-            if(coordinates[0] == corner[0] && coordinates[1] == corner[1]) {
+            if(coordinates[0] === corner[0] && coordinates[1] === corner[1]) {
                 return true;
             }
         }
@@ -42,14 +43,14 @@ export default class Board {
     }
 
     updateEdges(coordinates) {
-        this.edges.delete(JSON.stringify(coordinates));
+        this.edges.delete(coordinates);
         this.directions.forEach(direction => {
+            debugger
             const row = coordinates[0] + direction[0]; 
             const column = coordinates[1] + direction[1]; 
             const candidateCoordinates = [row, column]
-            const newEdge = JSON.stringify(candidateCoordinates);
-            if(!this.onBoard(candidateCoordinates) && this.emptySpace(candidateCoordinates)) {
-                this.edges.add(newEdge)
+            if(this.onBoard(candidateCoordinates) && this.emptySpace(candidateCoordinates)) {
+                this.edges.add(candidateCoordinates)
             }
         })
     }
@@ -58,13 +59,6 @@ export default class Board {
         return JSON.parse(edge)
     }
 
-    getEdgeArrays() {
-        const edgeArrays = [];
-        for (let edge of this.edges) {
-            edgeArrays.push(this.edgeToArray(edge))
-        }
-        return edgeArrays;
-    }
 
     onBoard(coordinates) {
         const row = coordinates[0];
@@ -147,7 +141,7 @@ export default class Board {
 
     canMove(color) {
         let movable = false;
-        for(const edge of this.edges) {
+        for(const edge of this.edges.getElements()) {
             if(movable) break;
             for(const direction of this.directions) {                
                 if(this.flipableDirection(color, this.edgeToArray(edge), direction)) {
@@ -160,16 +154,17 @@ export default class Board {
     }
 
     getValidMoves(color) {
-        const moves = []
-        for(const edge of this.edges) {
+        const moves = InclusiveSet()
+        for(const coordinates of this.edges.getElements()) {
             for(const direction of this.directions) {
-                const coordinates = this.edgeToArray(edge)   
-                if(this.flipableDirection(color, coordinates, direction)) {
-                    moves.push(coordinates)
+                const isValidMove = this.flipableDirection(color, coordinates, direction)   
+                if(isValidMove) {
+                    moves.add(coordinates)
                 }
             }
         }
-        return moves
+        debugger
+        return moves.getElements()
     }
 
     neitherCanMove() {
@@ -177,7 +172,7 @@ export default class Board {
     }
 
     boardFull() {
-        return !this.edges.size
+        return !this.edges.getSize()
     }
 
     winner() {
