@@ -43,9 +43,9 @@ export default class Board {
     }
 
     updateEdges(coordinates) {
+        if(coordinates[0] === 3 && coordinates[1] === 2) debugger
         this.edges.delete(coordinates);
         this.directions.forEach(direction => {
-            debugger
             const row = coordinates[0] + direction[0]; 
             const column = coordinates[1] + direction[1]; 
             const candidateCoordinates = [row, column]
@@ -108,15 +108,15 @@ export default class Board {
     }
 
     tryMove(color, coordinates) {
-        let flipped = false;
         if(!this.emptySpace(coordinates)) throw new Error("Invalid Move");
+        let flipped = false;
 
-        this.directions.forEach(direction => {
+        for (let direction of this.directions){
             if(this.flipableDirection(color, coordinates, direction)){
                 this.flip(color, coordinates, direction);
                 flipped = true;
             }
-        })
+        }
         if(flipped) {
             this.updateEdges(coordinates);
             return
@@ -144,7 +144,7 @@ export default class Board {
         for(const edge of this.edges.getElements()) {
             if(movable) break;
             for(const direction of this.directions) {                
-                if(this.flipableDirection(color, this.edgeToArray(edge), direction)) {
+                if(this.flipableDirection(color, edge, direction)) {
                     movable = true;
                     break;
                 }
@@ -153,8 +153,9 @@ export default class Board {
         return movable;
     }
 
+    //returns a list
     getValidMoves(color) {
-        const moves = InclusiveSet()
+        const moves = new InclusiveSet()
         for(const coordinates of this.edges.getElements()) {
             for(const direction of this.directions) {
                 const isValidMove = this.flipableDirection(color, coordinates, direction)   
@@ -163,7 +164,6 @@ export default class Board {
                 }
             }
         }
-        debugger
         return moves.getElements()
     }
 

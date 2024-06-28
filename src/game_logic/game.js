@@ -48,7 +48,6 @@ export default class Game {
 
     humanTurn(coordinates) {
         if(this.getCurrentPlayer().isHuman()) {
-            console.log({turn: coordinates})
             try {
                 this.turn(coordinates);
                 this.executePostTurnLogic()
@@ -111,7 +110,7 @@ export default class Game {
     }
     
     getAvailableActions() {
-        console.log('getAvailableActions', this.board.getValidMoves())
+        console.log({getAvailableActions: this.board.getValidMoves()})
         return this.board.getValidMoves(this.getCurrentPlayer().color)
     }
 

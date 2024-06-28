@@ -17,14 +17,14 @@ export class InclusiveSet {
         
     }
 
-
     add(element) {
         const hashable = this.elementToHashable(element)
         this.hashablesToElements[hashable] = element;
     }
 
     delete(element) {
-        delete this.hashablesToElements[element.hashable]
+        const hashable = this.elementToHashable(element)
+        delete this.hashablesToElements[hashable]
     }
 
     elementToHashable(element) {

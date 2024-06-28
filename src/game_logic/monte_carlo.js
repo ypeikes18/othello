@@ -9,6 +9,7 @@ export default class MonteCarloSearch {
 
     getBestAction(node) {
         const availableActions = node.getAvailableActions()
+
         console.log("getBestAction", {availableActions})
         let bestScoredAction = {action: null, score: 0};
         for(let action of availableActions) {
@@ -34,13 +35,14 @@ export default class MonteCarloSearch {
         const actionsToCheck = getNRandomElements(availableActions, this.getNumActionsToCheck())
         let totalResults = 0;
         for(let action of actionsToCheck) {
+            console.log({action, level})
             node.doAction(action);
             const score = this.scoreNode(node, level+1)
             totalResults += score;
             console.log("scoreNode",{score, level})
             node.undoAction();
         }
-    
+
         const averageResult = totalResults/actionsToCheck.length;
         console.log("scoreNode", {averageResult, actionsToCheck})
         return averageResult;
