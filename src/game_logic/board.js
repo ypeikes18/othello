@@ -16,7 +16,7 @@ export default class Board {
         let arr;
         for(let i = 1; i <=8; i++) {
             arr = new Array(8);
-            grid.push(arr.fill('none'))
+            grid.push(arr.fill(null))
         }
         [grid[3][4], grid[4][3]] = [WHITE, WHITE];
         [grid[4][4], grid[3][3]] = [BLACK, BLACK];
@@ -26,9 +26,9 @@ export default class Board {
 
     createEdges() {
         const edges = new Set();
-        const initialEdges = ['22', '23', '24', '25',
-                        '32', '35', '42', '45',
-                        '52', '53', '54', '55'];
+        const initialEdges = ['[2,2]', '[2,3]', '[2,4]', '[2,5]',
+                        '[3,2]', '[3,5]', '[4,2]', '[4,5]',
+                        '[5,2]', '[5,3]', '[5,4]', '[5,5]'];
         initialEdges.forEach(edge => {
             edges.add(edge);
         })
@@ -37,33 +37,25 @@ export default class Board {
     }
 
     updateEdges(coordinates) {
-        this.edges.delete(coordinates.join(''));
-        let newEdge, row, column;
-        
+        this.edges.delete(JSON.stringify(coordinates));
+
         this.directions.forEach(direction => {
-            row = coordinates[0] + direction[0]; 
-            column = coordinates[1] + direction[1]; 
-            newEdge = `${row}${column}`;
-
-            if(this.onBoard([row, column]) && 
-            this.grid[row][column] === 'none'){
-
+            const row = coordinates[0] + direction[0]; 
+            const column = coordinates[1] + direction[1]; 
+            const candidateCoordinates = [row, column]
+            const newEdge = JSON.stringify(candidateCoordinates);
+            if(!this.onBoard(candidateCoordinates)) {
+            }
+            else if(this.emptySpace(candidateCoordinates)){
                 this.edges.add(newEdge)
-                
-            } else if(this.onBoard([row, column]) && 
-              this.grid[row][column] !== 'none'){
-                
+            } else {
                 this.edges.delete(newEdge);
             }
         })
     }
 
     edgeToArray(edge) {
-        const arr = [];
-        edge.split('').forEach(point => {
-            arr.push(parseInt(point))
-        });
-        return arr;
+        return JSON.parse(edge)
     }
 
     getEdgeArrays() {
@@ -91,7 +83,7 @@ export default class Board {
     emptySpace(coordinates) {
         console.log({emptySpace: coordinates})
         const [row, column] = [coordinates[0], coordinates[1]];
-        return this.grid[row][column] === 'none';
+        return this.grid[row][column] === null;
     }
 
     //returns true if the direction can be flipped
@@ -110,7 +102,7 @@ export default class Board {
                     valid = false;
                     break;
                 }
-            } else if(this.grid[row][column] === 'none') {
+            } else if(this.grid[row][column] === null) {
                 valid = false;
                 break;
             } else {
