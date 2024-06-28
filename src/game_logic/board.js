@@ -48,18 +48,13 @@ export default class Board {
 
     updateEdges(coordinates) {
         this.edges.delete(JSON.stringify(coordinates));
-
         this.directions.forEach(direction => {
             const row = coordinates[0] + direction[0]; 
             const column = coordinates[1] + direction[1]; 
             const candidateCoordinates = [row, column]
             const newEdge = JSON.stringify(candidateCoordinates);
-            if(!this.onBoard(candidateCoordinates)) {
-            }
-            else if(this.emptySpace(candidateCoordinates)){
+            if(!this.onBoard(candidateCoordinates) && this.emptySpace(candidateCoordinates)) {
                 this.edges.add(newEdge)
-            } else {
-                this.edges.delete(newEdge);
             }
         })
     }
@@ -91,7 +86,6 @@ export default class Board {
     }
 
     emptySpace(coordinates) {
-        console.log({emptySpace: coordinates})
         const [row, column] = [coordinates[0], coordinates[1]];
         return this.grid[row][column] === null;
     }
