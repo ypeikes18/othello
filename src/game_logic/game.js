@@ -26,12 +26,15 @@ export default class Game {
     goToNextTurn() {
         this.players.unshift(this.players.pop());
         if(this.gameOver()) {
+            debugger
             this.winner = this.board.winner();
             console.log("WINNER WINNER", this.winner)
+            console.log({board: this.board.grid})
+            console.log({edges: this.board.edges})
             return;
         }
-        const getCurrentPlayerCanMove = this.board.canMove(this.getCurrentPlayer().color)
-        if(!getCurrentPlayerCanMove) {
+        const currentPlayerCanMove = this.board.canMove(this.getCurrentPlayer().color)
+        if(!currentPlayerCanMove) {
             this.goToNextTurn();
         }
     }
@@ -46,9 +49,15 @@ export default class Game {
 
     humanTurn(coordinates) {
         if(this.getCurrentPlayer().isHuman()) {
-            this.turn(coordinates)
-            console.log({humanTurn: coordinates})
-            this.executePostTurnLogic()
+            console.log({turn: coordinates})
+            try {
+                this.turn(coordinates);
+                this.executePostTurnLogic()
+            } catch {
+                console.log(`Illegal Move: ${coordinates}`)
+                return
+            }
+            
         }    
     }
 
@@ -58,11 +67,7 @@ export default class Game {
     // can be called by AI turn
     turn(coordinates) {
         console.log({turn: coordinates})
-        try {
-            this.board.tryMove(this.getCurrentPlayer().color, coordinates)
-        } catch {
-            return
-        }
+        this.board.tryMove(this.getCurrentPlayer().color, coordinates)
     }
 
     getCurrentPlayer() {
@@ -108,7 +113,6 @@ export default class Game {
     
     getAvailableActions() {
         console.log('getAvailableActions', this.board.getValidMoves())
-        debugger
         return this.board.getValidMoves(this.getCurrentPlayer().color)
     }
 

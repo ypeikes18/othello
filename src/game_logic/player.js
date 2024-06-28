@@ -22,8 +22,8 @@ export class Player {
             throw new Error('Can not generate move for human players');
         }
         console.log({getMove: game})
-        const searcher = new MonteCarloSearch(3,8);
-        console.log({getMove: "", searcher})
+        const searcher = new MonteCarloSearch(2,5);
+        console.log({searcher})
         return searcher.getBestAction(_.cloneDeep(game))
     }
 

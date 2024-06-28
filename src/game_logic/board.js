@@ -26,15 +26,10 @@ export default class Board {
     }
 
     createEdges() {
-        const edges = new Set();
         const initialEdges = ['[2,2]', '[2,3]', '[2,4]', '[2,5]',
                         '[3,2]', '[3,5]', '[4,2]', '[4,5]',
                         '[5,2]', '[5,3]', '[5,4]', '[5,5]'];
-        initialEdges.forEach(edge => {
-            edges.add(edge);
-        })
-
-        return edges;
+        return new Set(initialEdges)
     }
 
     isCorner(coordinates) {
@@ -125,11 +120,14 @@ export default class Board {
         this.directions.forEach(direction => {
             if(this.flipableDirection(color, coordinates, direction)){
                 this.flip(color, coordinates, direction);
-                this.updateEdges(coordinates);
                 flipped = true;
             }
         })
-        if(!flipped) throw new Error("Invalid Move");
+        if(flipped) {
+            this.updateEdges(coordinates);
+            return
+        }
+        throw new Error("Invalid Move");
     }
 
     // flips directions we already know are flipable
