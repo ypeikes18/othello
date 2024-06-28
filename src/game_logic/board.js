@@ -9,6 +9,7 @@ export default class Board {
                            [0,-1], [0,1]]
         this.edges = this.createEdges();
         this.emptySpace = this.emptySpace.bind(this)
+        this.corners = [[0,0],[0,7],[7,0],[7,7]]
     }
 
     createBoard() {
@@ -34,6 +35,15 @@ export default class Board {
         })
 
         return edges;
+    }
+
+    isCorner(coordinates) {
+        for(let corner of  this.corners) {
+            if(coordinates[0] == corner[0] && coordinates[1] == corner[1]) {
+                return true;
+            }
+        }
+        return false;
     }
 
     updateEdges(coordinates) {
@@ -114,10 +124,9 @@ export default class Board {
         return valid
     }
 
-    //returns true or false depending on if move happened
-    move(color, coordinates) {
+    tryMove(color, coordinates) {
         let flipped = false;
-        if(!this.emptySpace(coordinates)) return false;
+        if(!this.emptySpace(coordinates)) throw new Error("Invalid Move");
 
         this.directions.forEach(direction => {
             if(this.flipableDirection(color, coordinates, direction)){
@@ -126,7 +135,7 @@ export default class Board {
                 flipped = true;
             }
         })
-        return flipped;
+        if(!flipped) throw new Error("Invalid Move");
     }
 
     // flips directions we already know are flipable

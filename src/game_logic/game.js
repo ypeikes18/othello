@@ -57,8 +57,10 @@ export default class Game {
     // can be called by AI turn
     turn(coordinates) {
         console.log({turn: coordinates})
-        if(this.board.move(this.getCurrentPlayer().color, coordinates)) {
-            return true;
+        try {
+            this.board.tryMove(this.getCurrentPlayer().color, coordinates)
+        } catch {
+            return
         }
     }
 
