@@ -172,8 +172,7 @@ export default class Board {
     }
 
     neitherCanMove() {
-        return !(this.canMove(WHITE) || 
-                this.canMove(BLACK))
+        return !(this.canMove(WHITE) || this.canMove(BLACK))
     }
 
     boardFull() {
@@ -181,7 +180,7 @@ export default class Board {
     }
 
     winner() {
-        const score = {white: 0, black: 0};
+        const score = {white: 0, black: 0, null: 0};
         this.grid.flat().forEach(ele => {
             score[ele] += 1;
         })
