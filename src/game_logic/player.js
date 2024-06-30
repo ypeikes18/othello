@@ -1,5 +1,5 @@
-import {WHITE, BLACK, HUMAN, AI} from "./constants";
-import MonteCarloSearch from "./monte_carlo";
+import {WHITE, BLACK, HUMAN, AI} from "./constants.js";
+import MonteCarloSearch from "./monte_carlo.js";
 import _ from "lodash"; 
 
 export class Player {
@@ -21,9 +21,7 @@ export class Player {
         if (this.type !== AI) {
             throw new Error('Can not generate move for human players');
         }
-        console.log({getMove: game})
         const searcher = new MonteCarloSearch(2,5);
-        console.log({searcher})
         return searcher.getBestAction(_.cloneDeep(game))
     }
 

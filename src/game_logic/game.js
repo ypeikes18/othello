@@ -1,7 +1,7 @@
-import Board from "./board";
+import Board from "./board.js";
 import _ from "lodash"; 
-import {WHITE, BLACK, HUMAN, AI, TIE} from "./constants";
-import {Player} from "./player";
+import {WHITE, BLACK, HUMAN, AI, TIE} from "./constants.js";
+import {Player} from "./player.js";
 
 
 export default class Game {
@@ -27,9 +27,6 @@ export default class Game {
         this.players.unshift(this.players.pop());
         if(this.gameOver()) {
             this.winner = this.board.winner();
-            console.log("WINNER WINNER", this.winner)
-            console.log({board: this.board.grid})
-            console.log({edges: this.board.edges})
             return;
         }
         const currentPlayerCanMove = this.board.canMove(this.getCurrentPlayer().color)
@@ -41,7 +38,6 @@ export default class Game {
     aiTurn() {
         // TODO build in a delay that the montecarlo search can ignore 
         const move = this.getCurrentPlayer().getMove(this);
-        console.log({aiTurn: "", move})
         this.turn(move);
         this.executePostTurnLogic()
     }
@@ -55,7 +51,6 @@ export default class Game {
                 console.log(`Illegal Move: ${coordinates}`)
                 return
             }
-            
         }    
     }
 
@@ -64,7 +59,6 @@ export default class Game {
     // can be called by montecarlo calling doAction
     // can be called by AI turn
     turn(coordinates) {
-        console.log({turn: coordinates})
         this.board.tryMove(this.getCurrentPlayer().color, coordinates)
     }
 
@@ -78,14 +72,11 @@ export default class Game {
     }
 
     getResult() {
-        console.log("getResult",{winner: this.winner})
         if(this.winner === TIE) {
             return 0.5;
-        }
-        if(this.winner === this.aiPlayer.color) {
+        } else if(this.winner === this.aiPlayer.color) {
             return 1;
-        }
-        if(this.winner === this.humanPlayer.color) {
+        } else if(this.winner === this.humanPlayer.color) {
             return 0;
         }
         return null;        
@@ -96,21 +87,20 @@ export default class Game {
     }
 
     // Does not take advantage of backtracking
-    undoAction() {
-        this.board = this.previousState.board;
-        this.players = this.previousState.players;
-        this.winner = this.previousState.winner;
-        this.previousState = this.previousState.previousState;
-    }
+    // undoAction() {
+    //     this.board = this.previousState.board;
+    //     this.players = this.previousState.players;
+    //     this.winner = this.previousState.winner;
+    //     this.previousState = this.previousState.previousState;
+    // }
 
     doAction(coordinates) {
-        this.saveState()
+        // this.saveState()
         this.turn(coordinates);
         this.goToNextTurn()
     }
     
     getAvailableActions() {
-        console.log({getAvailableActions: this.board.getValidMoves()})
         return this.board.getValidMoves(this.getCurrentPlayer().color)
     }
 

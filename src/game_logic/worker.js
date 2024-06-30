@@ -19,12 +19,10 @@ export default class MonteCarloSearch {
             node.doAction(action);
             const score = this.scoreNode(node, level+1)
             totalResults += score;
-            console.log("scoreNode",{score, level})
             node.undoAction();
         }
     
         const averageResult = totalResults/actionsToCheck.length;
-        console.log("scoreNode", {averageResult, actionsToCheck})
         return averageResult;
     }
 

@@ -9,7 +9,6 @@ export default class Square extends React.Component {
 
     handleClick() {
         this.props.turn(this.props.coordinates);
-        console.log({handleClick: this.props.coordinates})
     }
 
 

@@ -14,7 +14,6 @@ export class InclusiveSet {
         for(let element of elements) {
             this.add(element)
         }
-        
     }
 
     add(element) {
@@ -36,6 +35,10 @@ export class InclusiveSet {
     }
 
     getSize() {
-        return Object.values(this.hashablesToElements).length
+        return this.getElements().length
+    }
+
+    has(element) {
+        return this.elementToHashable(element) in this.hashablesToElements
     }
 }

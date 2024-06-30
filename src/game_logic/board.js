@@ -1,5 +1,5 @@
-import {WHITE, BLACK, TIE} from "./constants";
-import {InclusiveSet} from "./utils"
+import {WHITE, BLACK, TIE} from "./constants.js";
+import {InclusiveSet} from "./utils.js"
 
 export default class Board {
 
@@ -16,7 +16,7 @@ export default class Board {
     createBoard() {
         const grid = [];
         let arr;
-        for(let i = 1; i <=8; i++) {
+        for(let i = 0; i <8; i++) {
             arr = new Array(8);
             grid.push(arr.fill(null))
         }
@@ -43,7 +43,6 @@ export default class Board {
     }
 
     updateEdges(coordinates) {
-        if(coordinates[0] === 3 && coordinates[1] === 2) debugger
         this.edges.delete(coordinates);
         this.directions.forEach(direction => {
             const row = coordinates[0] + direction[0]; 
@@ -55,19 +54,14 @@ export default class Board {
         })
     }
 
-    edgeToArray(edge) {
-        return JSON.parse(edge)
-    }
-
-
     onBoard(coordinates) {
         const row = coordinates[0];
         const column = coordinates[1];
+        return this.numOnBoard(row) && this.numOnBoard(column)
+    }
 
-        return (row >= 0 && 
-                row <= 7 && 
-                column >= 0 && 
-                column <= 7);
+    numOnBoard(num){
+        return num >= 0 && num <=7
     }
 
     otherColor(color) {
@@ -108,20 +102,25 @@ export default class Board {
     }
 
     tryMove(color, coordinates) {
-        if(!this.emptySpace(coordinates)) throw new Error("Invalid Move");
+        if (!this.onBoard(coordinates)) {
+            throw new Error(`Invalid Move: Coordinates ${coordinates} are out of bounds`);
+        }
+        if (!this.emptySpace(coordinates)) {
+            throw new Error(`Invalid Move: Space at ${coordinates} is not empty`);
+        }
         let flipped = false;
-
-        for (let direction of this.directions){
-            if(this.flipableDirection(color, coordinates, direction)){
+    
+        for (let direction of this.directions) {
+            if (this.flipableDirection(color, coordinates, direction)) {
                 this.flip(color, coordinates, direction);
                 flipped = true;
             }
         }
-        if(flipped) {
+        if (flipped) {
             this.updateEdges(coordinates);
-            return
+            return;
         }
-        throw new Error("Invalid Move");
+        throw new Error(`Invalid Move: No pieces can be flipped from ${coordinates}`);
     }
 
     // flips directions we already know are flipable
@@ -156,15 +155,20 @@ export default class Board {
     //returns a list
     getValidMoves(color) {
         const moves = new InclusiveSet()
-        for(const coordinates of this.edges.getElements()) {
-            for(const direction of this.directions) {
-                const isValidMove = this.flipableDirection(color, coordinates, direction)   
-                if(isValidMove) {
-                    moves.add(coordinates)
-                }
+        for(let coordinates of this.edges.getElements()) {
+            if(this.isValidMove(color, coordinates)) {
+                moves.add(coordinates)
             }
         }
         return moves.getElements()
+    }
+
+    isValidMove(color, coordinates) {
+        for(let direction of this.directions) {
+            const isValidDirection = this.flipableDirection(color, coordinates, direction) 
+            if(isValidDirection) return true;
+        }
+        return false;
     }
 
     neitherCanMove() {

@@ -1,4 +1,5 @@
 // doAction, getAvailableActions, getResult, UndoAction
+import _ from "lodash"; 
 
 export default class MonteCarloSearch {
 
@@ -10,13 +11,11 @@ export default class MonteCarloSearch {
     getBestAction(node) {
         const availableActions = node.getAvailableActions()
 
-        console.log("getBestAction", {availableActions})
         let bestScoredAction = {action: null, score: 0};
         for(let action of availableActions) {
-            node.doAction(action)
-            const score = this.scoreNode(node);
-            console.log("getBestAction", {score})
-            node.undoAction()
+            const copy = _.cloneDeep(node)
+            copy.doAction(action)
+            const score = this.scoreNode(copy);
             if (score > bestScoredAction.score) {
                 bestScoredAction = {action, score}
             }
@@ -30,21 +29,22 @@ export default class MonteCarloSearch {
             return result;
         }
         const availableActions = node.getAvailableActions()
-        console.log("scoreNode", {availableActions})
 
         const actionsToCheck = getNRandomElements(availableActions, this.getNumActionsToCheck())
         let totalResults = 0;
         for(let action of actionsToCheck) {
-            console.log({action, level})
-            node.doAction(action);
-            const score = this.scoreNode(node, level+1)
+            const copy = _.cloneDeep(node)
+            try {
+                copy.doAction(action);
+            } catch {
+                console.log({availableActions, level, grid: node.board.grid, action, edges: node.board.edges})
+                debugger
+            }
+            const score = this.scoreNode(copy, level+1)
             totalResults += score;
-            console.log("scoreNode",{score, level})
-            node.undoAction();
         }
 
         const averageResult = totalResults/actionsToCheck.length;
-        console.log("scoreNode", {averageResult, actionsToCheck})
         return averageResult;
     }
 
