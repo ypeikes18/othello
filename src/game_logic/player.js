@@ -21,7 +21,7 @@ export class Player {
         if (this.type !== AI) {
             throw new Error('Can not generate move for human players');
         }
-        const searcher = new MonteCarloSearch(3,30);
+        const searcher = new MonteCarloSearch(2,1);
         return searcher.getBestAction(_.cloneDeep(game))
     }
 
