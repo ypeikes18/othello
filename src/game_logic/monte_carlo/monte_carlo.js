@@ -26,20 +26,15 @@ export default class MonteCarloSearch {
     scoreNode(node, level=1) {
         const result = node.getResult()
         if(result !== null){
+            console.log({level, result})
             return result;
         }
         const availableActions = node.getAvailableActions()
-        const actionsToCheck = getNRandomElements(availableActions, this.getNumActionsToCheck())
+        const actionsToCheck = getNRandomElements(availableActions, this.getNumActionsToCheck(level, availableActions.length))
         let totalResults = 0;
         for(let action of actionsToCheck) {
             const copy = _.cloneDeep(node)
-            try {
-                copy.doAction(action);
-                console.log({level, availableActions, board: copy.board.grid, edges: copy.board.edges.getElements(), action})
-            } catch {
-                console.log({availableActions, level, grid: node.board.grid, action, edges: node.board.edges})
-                debugger
-            }
+            copy.doAction(action);
             const score = this.scoreNode(copy, level+1)
             totalResults += score;
         }
