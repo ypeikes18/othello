@@ -1,10 +1,10 @@
 import React from 'react';
 import Game from '../game_logic/game.js';
-import Board from './board';
-import NewGame from './new_game';
+import Board from './board.js';
+import NewGame from './new_game.js';
 import DisplayTurn from './display_turn.js';
-import Links from './links';
-import Modal from './modal';
+import Links from './links.js';
+import Modal from './modal.js';
 
 
 export default class GameComponent extends React.Component {

@@ -1,6 +1,6 @@
 import React from "react";
-import WinnerMessage from './winner_message';
-import Instructions from './instructions';
+import WinnerMessage from './winner_message.js';
+import Instructions from './instructions.js';
 
 
 class Modal extends React.Component {

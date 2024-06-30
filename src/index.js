@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
-import Board from './game_logic/board';
+import App from './App.js';
+import Board from './game_logic/board.js';
 
 
 document.addEventListener('DOMContentLoaded', () => {

@@ -1,7 +1,5 @@
 import React from 'react';
-
-import GameComponent from './game_component';
-import Square from './square';
+import Square from './square.js';
 
 export default class Board extends React.Component {
 

@@ -9,7 +9,6 @@ export default class Board {
                            [1, -1], [1, 0], [1, 1],
                            [0,-1], [0,1]]
         this.edges = this.createEdges(); //InclusiveSet
-        this.emptySpace = this.emptySpace.bind(this)
         this.corners = [[0,0],[0,7],[7,0],[7,7]]
     }
 
@@ -139,17 +138,10 @@ export default class Board {
     }
 
     canMove(color) {
-        let movable = false;
         for(const edge of this.edges.getElements()) {
-            if(movable) break;
-            for(const direction of this.directions) {                
-                if(this.flipableDirection(color, edge, direction)) {
-                    movable = true;
-                    break;
-                }
-            }
+            if(this.isValidMove(color, edge)) return true;
         }
-        return movable;
+        return false;
     }
 
     //returns a list

@@ -29,13 +29,13 @@ export default class MonteCarloSearch {
             return result;
         }
         const availableActions = node.getAvailableActions()
-
         const actionsToCheck = getNRandomElements(availableActions, this.getNumActionsToCheck())
         let totalResults = 0;
         for(let action of actionsToCheck) {
             const copy = _.cloneDeep(node)
             try {
                 copy.doAction(action);
+                console.log({level, availableActions, board: copy.board.grid, edges: copy.board.edges.getElements(), action})
             } catch {
                 console.log({availableActions, level, grid: node.board.grid, action, edges: node.board.edges})
                 debugger
