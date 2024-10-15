@@ -32,7 +32,7 @@ export default class GameComponent extends React.Component {
 
     render() {
         const { game, instructions } = this.state;
-        const color = game.getCurrentPlayer().color;
+        const color = game.getCurrentPlayer().color === -1 ? "White" : "Black";
         
         const winnerMessage = game.winner ? (
             <Modal type={'winner'} winner={game.winner}/>

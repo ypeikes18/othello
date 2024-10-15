@@ -1,4 +1,4 @@
-import {WHITE, BLACK, HUMAN, AI} from "./constants.js";
+import {HUMAN, AI} from "./constants.js";
 import MonteCarloSearch from "./monte_carlo/monte_carlo.js";
 import _ from "lodash"; 
 

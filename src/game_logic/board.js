@@ -1,4 +1,4 @@
-import {WHITE, BLACK, TIE} from "./constants.js";
+import {WHITE, BLACK, TIE, EMPTY} from "./constants.js";
 import {InclusiveSet} from "./utils.js"
 
 export default class Board {
@@ -17,7 +17,7 @@ export default class Board {
         let arr;
         for(let i = 0; i <8; i++) {
             arr = new Array(8);
-            grid.push(arr.fill(null))
+            grid.push(arr.fill(EMPTY))
         }
         [grid[3][4], grid[4][3]] = [WHITE, WHITE];
         [grid[4][4], grid[3][3]] = [BLACK, BLACK];
@@ -69,7 +69,7 @@ export default class Board {
 
     emptySpace(coordinates) {
         const [row, column] = [coordinates[0], coordinates[1]];
-        return this.grid[row][column] === null;
+        return this.grid[row][column] === EMPTY;
     }
 
     //returns true if the direction can be flipped
@@ -172,14 +172,14 @@ export default class Board {
     }
 
     winner() {
-        const score = {white: 0, black: 0, null: 0};
+        const score = {[WHITE]: 0, [BLACK]: 0, [EMPTY]: 0};
         this.grid.flat().forEach(ele => {
             score[ele] += 1;
         })
 
-        if(score.white > score.black) {
+        if(score.WHITE > score.black) {
             return WHITE;
-        } else if (score.white < score.black){
+        } else if (score.WHITE < score.black){
             return BLACK;
         } else {
             return TIE

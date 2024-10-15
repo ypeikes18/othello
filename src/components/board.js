@@ -18,8 +18,11 @@ export default class Board extends React.Component {
                 return (<div key={rowIndex}
                              className='row'>                                 
                             {row.map((square, columnIndex) => {
+                                let color = null;
+                                if(square === -1) color = "white"
+                                if(square === 1) color = "black"
                                 return <Square key={`${rowIndex}${columnIndex}`} 
-                                               color={square}
+                                               color={color}
                                                game={this.props.game}
                                                coordinates={[rowIndex, columnIndex]}
                                                turn={turn}/>

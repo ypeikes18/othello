@@ -1,9 +1,9 @@
-import {factorial} from "./utils";
+import {factorial, loadModel} from "./utils";
 
 class MoveEvaluator {
 
     constructor() {
-        
+        this.model = null;
     }
 
     canTakeCorner(board) {
@@ -14,6 +14,11 @@ class MoveEvaluator {
     getMaxNumGameTreeNodes(board) {
         const emptySpaces = 64 - board.edges;
         return factorial(emptySpaces);
+    }
+
+
+    async getBestMove(game) {
+        if(!this.model) this.model = loadModel();
     }
     
 }

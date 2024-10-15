@@ -1,16 +1,21 @@
 import Game from "../src/game_logic/game.js";
 import {csvToListOfDicts, writeListOfDictsToJSON} from "./util.js"
+import _ from "lodash"
 
 export async function processCSV(filePath) {
   const gameDicts = await csvToListOfDicts(filePath);
   const trainingData = [];
-  for (let i = 0; i < 5; i++) {
-    const gameDict = gameDicts[i];
-    console.log(`Processing game ${i + 1}: ${gameDict.eOthello_game_id}`);
-    const gameMovesString = gameDict["game_moves"];
-    gameDict["game_moves"] = gameStringToMoveCoordinates(gameMovesString);
-    const gameTrainingData = getTrainingData(gameDict);
-    trainingData.push(...gameTrainingData);
+  for (let i = 0; i < 2000; i++) {
+    try {
+      const gameDict = gameDicts[i];
+      const gameMovesString = gameDict["game_moves"];
+      gameDict["game_moves"] = gameStringToMoveCoordinates(gameMovesString);
+      const gameTrainingData = getTrainingData(gameDict);
+      trainingData.push(...gameTrainingData);
+    } catch(err) {
+      console.log(`Error processing game ${i}: ${err}`)
+    }
+
   }
   return trainingData;
 }
@@ -39,7 +44,7 @@ const getTrainingData = (gameDict) => {
     game.doAction(move)
     trainingData.push({
       label: numToOneHotEncodedLabel(gameDict.winner),
-      board: game.board.grid
+      board: _.cloneDeep(game.board.grid)
     })
   }
   return trainingData

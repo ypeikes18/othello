@@ -82,18 +82,6 @@ export default class Game {
         return null;        
     }
 
-    saveState() {
-        this.previousState = _.cloneDeep(this);
-    }
-
-    // Does not take advantage of backtracking
-    // undoAction() {
-    //     this.board = this.previousState.board;
-    //     this.players = this.previousState.players;
-    //     this.winner = this.previousState.winner;
-    //     this.previousState = this.previousState.previousState;
-    // }
-
     doAction(coordinates) {
         // this.saveState()
         this.turn(coordinates);

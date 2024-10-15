@@ -1,3 +1,5 @@
+import * as tf from '@tensorflow/tfjs';
+
 export const factorial = (num) => {
     if(num === 0) return 1;
     let res = 1
@@ -42,3 +44,7 @@ export class InclusiveSet {
         return this.elementToHashable(element) in this.hashablesToElements
     }
 }
+
+export const loadModel = async () => {
+  return await tf.loadLayersModel('./models/model.json');
+};
